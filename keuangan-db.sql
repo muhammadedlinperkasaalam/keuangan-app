@@ -35,3 +35,23 @@ CREATE TABLE kategori (
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_kategori_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- 4. TRANSFER (pindah saldo antar dompet) --------------
+-- Bukan pemasukan/pengeluaran: total saldo tidak berubah, hanya berpindah dompet.
+-- Biaya transfer (jika > 0) dicatat sebagai transaksi pengeluaran yang menunjuk
+-- ke transfer ini lewat transaksi.transfer_id.
+CREATE TABLE transfer (
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id         INT UNSIGNED NOT NULL,
+    dari_dompet_id  INT UNSIGNED NOT NULL,
+    ke_dompet_id    INT UNSIGNED NOT NULL,
+    tanggal         DATE NOT NULL,
+    jumlah          DECIMAL(15,2) NOT NULL,
+    keterangan      VARCHAR(255) NULL,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_tf_user_tanggal (user_id, tanggal),
+    CONSTRAINT chk_tf_beda_dompet CHECK (dari_dompet_id <> ke_dompet_id),
+    CONSTRAINT fk_tf_user FOREIGN KEY (user_id)         REFERENCES users(id)    ON DELETE CASCADE,
+    CONSTRAINT fk_tf_dari FOREIGN KEY (dari_dompet_id)  REFERENCES dompet(id)   ON DELETE RESTRICT,
+    CONSTRAINT fk_tf_ke   FOREIGN KEY (ke_dompet_id)    REFERENCES dompet(id)   ON DELETE RESTRICT
+) ENGINE=InnoDB;
