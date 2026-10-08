@@ -78,3 +78,15 @@ CREATE TABLE transaksi (
     CONSTRAINT fk_trx_kategori  FOREIGN KEY (kategori_id)   REFERENCES kategori(id) ON DELETE CASCADE,
     CONSTRAINT fk_trx_transfer  FOREIGN KEY (transfer_id)   REFERENCES transfer(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- 6. ANGGARAN (batas pengeluaran per kategori per bulan) --
+CREATE TABLE anggaran (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT UNSIGNED NOT NULL,
+    kategori_id INT UNSIGNED NOT NULL,
+    bulan       CHAR(7) NOT NULL,                -- format YYYY-MM
+    batas       DECIMAL(15,2) NOT NULL,
+    UNIQUE KEY uq_anggaran(user_id, kategori_id, bulan),
+    CONSTRAINT fk_ang_user      FOREIGN KEY (user_id)       REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_ang_kategori  FOREIGN KEY (kategori_id)   REFERENCES kategori(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
