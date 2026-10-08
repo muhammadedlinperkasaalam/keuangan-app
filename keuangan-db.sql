@@ -25,3 +25,13 @@ CREATE TABLE dompet (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_dompet_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- 3. KATEGORI (jenis menentukan pemasukan / pengeluaran) --
+CREATE TABLE kategori (
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id         INT UNSIGNED NOT NULL,
+    nama_kategori   VARCHAR(50) NOT NULL,
+    jenis           ENUM('pemasukan','pengeluaran') NOT NULL,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_kategori_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
