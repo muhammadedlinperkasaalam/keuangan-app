@@ -55,3 +55,26 @@ CREATE TABLE transfer (
     CONSTRAINT fk_tf_dari FOREIGN KEY (dari_dompet_id)  REFERENCES dompet(id)   ON DELETE RESTRICT,
     CONSTRAINT fk_tf_ke   FOREIGN KEY (ke_dompet_id)    REFERENCES dompet(id)   ON DELETE RESTRICT
 ) ENGINE=InnoDB;
+
+-- 5. TRANSAKSI ---------------------------------------------
+-- Jenis transaksi diambil dari kategori.jenis (tidak disimpan ganda)
+-- Saldo dompet TIDAK disimpan, dihitung dari saldo_awal + transaksi + transfer
+-- transfer_id terisi hanya untuk biaya transfer; terhapus otomatis bersama transfernya
+CREATE TABLE transaksi (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT UNSIGNED NOT NULL,
+    dompet_id   INT UNSIGNED NOT NULL,
+    kategori_id INT UNSIGNED NOT NULL,
+    transfer_id INT UNSIGNED NULL,
+    tanggal     DATE NOT NULL,
+    jumlah      DECIMAL(15,2) NOT NULL,
+    keterangan  VARCHAR(255) NULL,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_user_tanggal(user_id, tanggal),
+    INDEX idx_trx_transfer (transfer_id),
+    CONSTRAINT fk_trx_user      FOREIGN KEY (user_id)       REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT tk_trx_dompet    FOREIGN KEY (dompet_id)     REFERENCES dompet(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_trx_kategori  FOREIGN KEY (kategori_id)   REFERENCES kategori(id) ON DELETE CASCADE,
+    CONSTRAINT fk_trx_transfer  FOREIGN KEY (transfer_id)   REFERENCES transfer(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
