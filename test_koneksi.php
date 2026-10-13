@@ -1,7 +1,7 @@
 <?php
 // file sementara untuk part 1 (hapus setelah part 1 selesai)
-require __DIR__.'config/app.php';
-require __DIR__.'config/database.php';
+require __DIR__ . '/config/app.php';
+require __DIR__ . '/config/database.php';
 
 echo '<h2>' . APP_NAME . '</h2>';
 echo '<p>Koneksi database: <b style="color:green">BERHASIL</b></p>';
