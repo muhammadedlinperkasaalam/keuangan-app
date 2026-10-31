@@ -38,7 +38,7 @@ function get_flash(): ?array {
 }
 
 //proteksi CSRF
-function csrt_token(): string {
+function csrf_token(): string {
     if (empty($_SESSION['csrf'])) {
         $_SESSION['csrf'] = bin2hex(random_bytes(32));
     }

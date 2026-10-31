@@ -21,4 +21,4 @@ include ROOT_PATH . '/layouts/header.php';
         <button class="btn btn-primary">Kirim (uji SCRF + flash message)</button>
     </form>
 </div>
-<?php include ROOT_PATH . '/layouts/footer.php';
+<?php include ROOT_PATH . '/layouts/footer.php'; ?>
