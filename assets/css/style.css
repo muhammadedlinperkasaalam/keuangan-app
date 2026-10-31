@@ -1,0 +1,6 @@
+body { background: #f4f6fb; }
+.card { border: 0; box-shadow: 0 2px 8px rgba(0, 0, 0,.06); }
+.star-card .angka { font-size: 1.5rem; font-weight: 700; }
+.teks-masuk { color: #198754; }
+.teks-keluar { color: #dc3545; }
+.auth-box { max-width: 420px; margin: 60px auto; }
