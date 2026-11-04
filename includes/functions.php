@@ -68,7 +68,7 @@ function rentang_bulan(string $bulan): array {
 }
 
 // blok 6: data awal untuk user baru
-function seed_detault(PDO $pdo, int $uid): void {
+function seed_default(PDO $pdo, int $uid): void {
     $pdo->prepare("INSERT INTO dompet (user_id, nama_dompet, saldo_awal) VALUES (?, 'Tunai', 0)")
     ->execute([$uid]);
     $kat = [
