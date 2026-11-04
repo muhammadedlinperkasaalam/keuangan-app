@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
     $konfirm = trim($_POST['konfirmasi'] ?? '');
 
-// ----- BLOK 2: validasi -------
+    // ----- BLOK 2: validasi -------
     if ($nama === '' || $email === '' || $password === '') {
         $error = 'Semua field wajib diisi.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,3 +37,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 } 
+
+// -------- BLOK 4: tampilan ----------
+$judul = 'Daftar';
+include ROOT_PATH . '/layouts/header.php';
+?>
+<div class="auth-box">
+    <div class="card p-4">
+        <h4 class="mb-3 text-center">Buat Akun</h4>
+        <?php if ($error): ?><div class="alert alert-danger"><?= e($error) ?></div><?php endif; ?>
+            <form method="post">
+                <?= csrf_field() ?>
+                <div class="mb-3"><label class="form-label">Nama</label>
+                <input type="text" name="nama" class="form-control" value="<?= e($nama) ?>" required></div>
+                <div class="mb-3"><label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" value="<?= e($email) ?>" required></div>
+                <div class="mb-3"><label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label">Konfirmasi Password</label>
+                <input type="password" name="konfirmasi" class="form-control" required></div>
+                <button class="btn btn-primary w-100">Daftar</button>
+            </form>
+            <p class="text-center mt-3 mb-0">Sudah punya akun ? <a href="login.php">Login</a></p>
+    </div>
+</div>
+<?php include ROOT_PATH . '/layouts/footer.php'; ?>
